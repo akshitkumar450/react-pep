@@ -1,0 +1,42 @@
+.row_container {
+  padding: 20px;
+}
+.row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* overflow-y: hidden;
+  overflow-x: scroll; */
+}
+.row_card {
+  position: relative;
+  margin: 5px;
+}
+
+.row_card > .row_info {
+  position: absolute;
+  bottom: 10px;
+  color: white;
+  padding-left: 20px;
+  font-size: 16px;
+}
+.row_card img {
+  max-height: 150px;
+  object-fit: contain;
+  margin-right: 15px;
+  transition: all 450ms;
+  opacity: 0.85;
+}
+
+.row_card img:hover {
+  transform: scale(1.08);
+  opacity: 1;
+}
+.row {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.row::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
