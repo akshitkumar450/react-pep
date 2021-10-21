@@ -81,6 +81,43 @@ function Favourites() {
     // console.log('movies', movies);
     // console.log("************");
     // console.log(text);
+
+    // sorting feature
+    // ascending a-b
+    // descending b-a
+    const sortPopularityAsc = () => {
+        let temp = movies;
+        // console.log(temp);
+        temp.sort(function (obj1, obj2) {
+            return obj1.popularity - obj2.popularity
+        })
+        setMovies([...temp])
+    }
+
+    const sortPopularityDesc = () => {
+        let temp = movies;
+        temp.sort(function (obj1, obj2) {
+            return obj2.popularity - obj1.popularity
+        })
+        setMovies([...temp])
+    }
+
+    const sortRatingAsc = () => {
+        let temp = movies;
+        // console.log(temp);
+        temp.sort(function (obj1, obj2) {
+            return obj1.vote_average - obj2.vote_average
+        })
+        setMovies([...temp])
+    }
+    const sortRatingDesc = () => {
+        let temp = movies;
+        temp.sort(function (obj1, obj2) {
+            return obj2.vote_average - obj1.vote_average
+        })
+        setMovies([...temp])
+    }
+
     return (
         <div className='row'>
             <div className='col-lg-3'>
@@ -113,8 +150,16 @@ function Favourites() {
                             <th scope="col">Image</th>
                             <th scope="col">title </th>
                             <th scope="col">Genre </th>
-                            <th scope="col">Popularity</th>
-                            <th scope="col">rating</th>
+                            <th scope="col">
+                                <i onClick={sortPopularityAsc} className="bi bi-caret-up-fill"></i>
+                                Popularity
+                                <i onClick={sortPopularityDesc} className="bi bi-caret-down-fill"></i>
+                            </th>
+                            <th scope="col">
+                                <i onClick={sortRatingAsc} className="bi bi-caret-up-fill"></i>
+                                rating
+                                <i onClick={sortRatingDesc} className="bi bi-caret-down-fill"></i>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
