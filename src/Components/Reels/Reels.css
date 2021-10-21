@@ -1,0 +1,55 @@
+.signUp__form,
+.login__form {
+  width: 30vw;
+  text-align: center;
+}
+.login,
+.signUp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.login__carouselContainer {
+  height: 590px;
+  width: 441px;
+  object-fit: contain;
+  margin-right: 50px;
+  position: relative;
+}
+
+.login__imgCarousel {
+  position: absolute;
+  height: 423px;
+  width: 241px;
+  top: 93px;
+  left: 143px;
+}
+
+@media (max-width: 450px) {
+  .signUp__form,
+  .login__form {
+    width: 80vw;
+  }
+  .login,
+  .signUp {
+    height: 60vh;
+  }
+  .login,
+  .signUp {
+    display: grid;
+    place-items: center;
+  }
+
+  .login__carouselContainer {
+    height: 490px;
+    width: 341px;
+  }
+
+  .login__imgCarousel {
+    height: 300px;
+    width: 200px;
+    top: 75px;
+    left: 115px;
+  }
+}
