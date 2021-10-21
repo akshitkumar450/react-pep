@@ -11,6 +11,9 @@ function Favourites() {
     const [filterArr, setFilterArr] = useState([]) // for filtered movies
     const [currgen, setCurrgen] = useState('All Genres')
     const [text, setText] = useState('')
+    const [limit, setLimit] = useState(3)
+    const [currpage, setCurrpage] = useState(1)
+    const [pageArr, setPageArr] = useState([])
 
     // fetching the favourites from localstorage
     useEffect(() => {
@@ -67,6 +70,20 @@ function Favourites() {
         }
     }, [currgen, movies, text])
 
+    useEffect(() => {
+        // console.log(filterArr.length);
+        let pages = Math.ceil(filterArr.length / limit)
+        console.log(pages);
+        let parr = []
+        for (let i = 1; i <= pages; i++) {
+            parr.push(i)
+        }
+        setPageArr(parr)
+        let si = (currpage - 1) * limit;
+        let ei = si + limit
+        filterArr.slice(si, ei)
+    }, [limit, filterArr.length, filterArr, currpage])
+    // console.log(filterArr);
     // searching  if all genres only
     // useEffect(() => {
     //     let filterArr = [];
@@ -141,7 +158,7 @@ function Favourites() {
                 <div className="row d-flex">
                     <input type="text" value={text} onChange={(e) => setText(e.target.value)} className="form-control col" />
 
-                    <input type="number" className="form-control col" />
+                    <input type="number" value={limit} onChange={(e) => setLimit(e.target.value)} className="form-control col" />
                 </div>
 
                 <table className="table">
@@ -181,6 +198,22 @@ function Favourites() {
                         }
                     </tbody>
                 </table>
+
+                <div className='d-flex justify-content-center'>
+                    <nav aria-label="Page navigation example " >
+                        <ul className="pagination">
+                            {
+                                pageArr.map((page, idx) => (
+                                    <li key={idx} className="page-item" >
+                                        <a className="page-link" href="#y" onClick={() => setCurrpage(page)} >{page}</a>
+                                    </li>
+                                ))
+                            }
+
+
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     )
