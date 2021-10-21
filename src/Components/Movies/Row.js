@@ -16,6 +16,9 @@ function Row({ fetchUrl, title }) {
             setMovies(data.results)
         }
         getMovies()
+
+        // to show add/remove on the refresh also 
+        saveMovieIds()
     }, [fetchUrl, currPage])
 
     // for right navigation
@@ -53,10 +56,13 @@ function Row({ fetchUrl, title }) {
         }
         // saving the favourites to localstorage
         localStorage.setItem("movies", JSON.stringify(oldData))
-        console.log(oldData);
+        // console.log(oldData);
+        // no need to save to state as it is stored in localstorage we can get it 
         // setFavMovies(oldData) // saving the favourites to a state
         saveMovieIds()
     }
+
+    // saving the id of fav movies
     const saveMovieIds = () => {
         let oldData = JSON.parse(localStorage.getItem('movies') || "[]")
         let temp = oldData.map((movie) => movie.id)
@@ -93,7 +99,6 @@ function Row({ fetchUrl, title }) {
                                             }
                                         </div>
                                     </div>
-
                                 )
                             )
                         }))
