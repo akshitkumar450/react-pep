@@ -8,8 +8,9 @@ const genreids = {
 function Favourites() {
     let [movies, setMovies] = useState([])
     const [genre, setGenre] = useState([])
-    const [filterArr, setFilterArr] = useState([])
+    const [filterArr, setFilterArr] = useState([]) // for filtered movies
     const [currgen, setCurrgen] = useState('All Genres')
+    const [text, setText] = useState('')
 
     // fetching the favourites from localstorage
     useEffect(() => {
@@ -44,21 +45,42 @@ function Favourites() {
         setMovies(movies)
     }
 
-    // filtering the movies according to currgenre
+    // filtering the movies according to currgenre and text
     useEffect(() => {
         let filterArr = [];
-        if (currgen === 'All Genres') {
+        if (currgen === 'All Genres' && text === "") {
             // filterArr = movies;
             // we can not delete the movies to filter out current genre movies
             // if all gennres then all movies should be shown
             setFilterArr(movies)
-        } else {
-            filterArr = movies.filter((movieObj) => genreids[movieObj.genre_ids[0]] === currgen)
+        } else if (currgen === 'All Genres' && text !== "") {
+            filterArr = movies.filter((movieObj) => movieObj.original_title.toLowerCase().includes(text.toLowerCase()))
+            setFilterArr(filterArr)
+        } else if (currgen !== 'All Genres') {
+            // first filter the movies on genre and then on search text
+            // it will handle both the cases for text==="" and text!==""
+            filterArr =
+                movies
+                    .filter((movieObj) => genreids[movieObj.genre_ids[0]] === currgen)
+                    .filter((movieObj) => movieObj.original_title.toLowerCase().includes(text.toLowerCase()))
             setFilterArr(filterArr)
         }
-    }, [currgen, movies])
+    }, [currgen, movies, text])
 
-    // console.log(filterArr);
+    // searching  if all genres only
+    // useEffect(() => {
+    //     let filterArr = [];
+
+    //     if (currgen === 'All Genres' && text !== "") {
+    //         filterArr = movies.filter((movieObj) => movieObj.original_title.toLowerCase().includes(text.toLowerCase()))
+    //         setFilterArr(filterArr)
+    //     }
+    // }, [text, movies, currgen])
+
+    // console.log('filter', filterArr);
+    // console.log('movies', movies);
+    // console.log("************");
+    // console.log(text);
     return (
         <div className='row'>
             <div className='col-lg-3'>
@@ -80,7 +102,8 @@ function Favourites() {
             </div>
             <div className='col-lg-9'>
                 <div className="row d-flex">
-                    <input type="text" className="form-control col" />
+                    <input type="text" value={text} onChange={(e) => setText(e.target.value)} className="form-control col" />
+
                     <input type="number" className="form-control col" />
                 </div>
 
