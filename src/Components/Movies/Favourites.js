@@ -8,6 +8,7 @@ const genreids = {
 function Favourites() {
     let [movies, setMovies] = useState([])
     const [genre, setGenre] = useState([])
+    const [filterArr, setFilterArr] = useState([])
     const [currgen, setCurrgen] = useState('All Genres')
 
     // fetching the favourites from localstorage
@@ -32,17 +33,7 @@ function Favourites() {
         setMovies(data)
         // console.log(data);
     }, [])
-
-    // saving all the genres to render the list of genres
-    // let temp = [];
-    // movies.forEach((movieObj) => {
-    //     if (!temp.includes(genreids[movieObj.genre_ids[0]])) {
-    //         temp.push(genreids[movieObj.genre_ids[0]])
-    //     }
-    // })
-    // temp = temp.slice(1)
-    // temp.unshift('All Genres')
-    // setGenre(temp)
+    // console.log(movies);
 
     const removeFav = (id) => {
         movies = movies.filter((movie) => movie.id !== id)
@@ -53,10 +44,21 @@ function Favourites() {
         setMovies(movies)
     }
 
-    const handleCurGen = (curGenre) => {
-        setCurrgen(curGenre)
-    }
+    // filtering the movies according to currgenre
+    useEffect(() => {
+        let filterArr = [];
+        if (currgen === 'All Genres') {
+            // filterArr = movies;
+            // we can not delete the movies to filter out current genre movies
+            // if all gennres then all movies should be shown
+            setFilterArr(movies)
+        } else {
+            filterArr = movies.filter((movieObj) => genreids[movieObj.genre_ids[0]] === currgen)
+            setFilterArr(filterArr)
+        }
+    }, [currgen, movies])
 
+    // console.log(filterArr);
     return (
         <div className='row'>
             <div className='col-lg-3'>
@@ -68,7 +70,7 @@ function Favourites() {
                                     background: value === currgen ? 'lightblue' : '',
                                     fontWeight: value === currgen ? 'bolder' : ''
                                 }}
-                                onClick={() => handleCurGen(value)}
+                                onClick={() => setCurrgen(value)}
                             >
                                 {value}
                             </li>
@@ -94,7 +96,7 @@ function Favourites() {
                     </thead>
                     <tbody>
                         {
-                            movies.length > 0 && movies?.map((movie, idx) => (
+                            filterArr.length > 0 && filterArr?.map((movie, idx) => (
                                 (movie.original_title && movie.backdrop_path) &&
                                 <tr key={movie.id}>
                                     <td> <img src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} style={{ width: '100px' }} alt="movie-img" />
