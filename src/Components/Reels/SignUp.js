@@ -40,7 +40,12 @@ function SignUp() {
                     })
 
             })
-            .catch((err) => setError(err.message))
+            .catch((err) => {
+                setError(err.message)
+                setTimeout(() => {
+                    setError('')
+                }, 4000)
+            })
     }
 
     return (
@@ -102,7 +107,7 @@ function SignUp() {
                     onClick={(e) => onSignUp(e)}
                     fullWidth={true}
                     disabled={!email || !password}
-                    c>singup</Button>
+                >singup</Button>
 
                 <p>Have an account?
                     <Link to='/' style={{ textDecoration: 'none' }}>

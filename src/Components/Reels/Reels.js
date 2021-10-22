@@ -64,7 +64,7 @@ function Reels() {
                                     <Login />
                                 </Route>
                                 <Route path='/signup' exact>
-                                    <signUp />
+                                    <SignUp />
                                 </Route>
                                 <Route path='/' exact>
                                     <Welcome />

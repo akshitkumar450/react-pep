@@ -1,5 +1,5 @@
 import { Button } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { auth } from './firebase'
 import { useStateValue } from './stateProvider'
 import { Link, useHistory } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom'
 function Welcome() {
     const [state, dispatch] = useStateValue()
     const history = useHistory()
+    const [error, setError] = useState('')
 
     const signOut = () => {
         auth.signOut()
@@ -18,7 +19,12 @@ function Welcome() {
                 })
                 history.push('/')
             })
-            .catch((err) => alert(err.message))
+            .catch((err) => {
+                setError(err.message)
+                setTimeout(() => {
+                    setError('')
+                }, 4000)
+            })
 
     }
     return (

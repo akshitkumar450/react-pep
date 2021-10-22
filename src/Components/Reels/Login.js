@@ -35,7 +35,12 @@ function Login() {
                 })
                 history.push('/')
             })
-            .catch((err) => setError(err.message))
+            .catch((err) => {
+                setError(err.message)
+                setTimeout(() => {
+                    setError('')
+                }, 4000)
+            })
     }
 
     // forgot password reset 
@@ -43,8 +48,12 @@ function Login() {
         auth.sendPasswordResetEmail(email)
             .then(() => {
                 alert('Please check your email...')
-            }).catch((e) => {
-                setError(e.message)
+            })
+            .catch((err) => {
+                setError(err.message)
+                setTimeout(() => {
+                    setError('')
+                }, 4000)
             })
     }
 
