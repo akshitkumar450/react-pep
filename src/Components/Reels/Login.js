@@ -25,7 +25,6 @@ function Login() {
         auth.signInWithEmailAndPassword(email, password)
             .then((authUser) => {
                 console.log(' logged in');
-
                 dispatch({
                     type: 'SIGN_IN',
                     payload: {
@@ -37,6 +36,16 @@ function Login() {
                 history.push('/')
             })
             .catch((err) => setError(err.message))
+    }
+
+    // forgot password reset 
+    const forgotPassword = (email) => {
+        auth.sendPasswordResetEmail(email)
+            .then(() => {
+                alert('Please check your email...')
+            }).catch((e) => {
+                setError(e.message)
+            })
     }
 
     return (
@@ -92,17 +101,24 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     fullWidth={true}
                 />
-                <Button variant="outlined"
+                <Button
+                    variant="outlined"
                     fullWidth={true}
                     margin='dense'
                     color='secondary'
-                >Forgot Password</Button>
+                    onClick={() => forgotPassword(email)}
+                >
+                    Forgot Password
+                </Button>
 
-                <Button variant="contained"
+                <Button
+                    variant="contained"
                     fullWidth={true}
                     margin='dense'
                     onClick={signIn}
-                >Login</Button>
+                    disabled={!email || !password}
+                >Login
+                </Button>
 
                 <p>New to Instagram?
                     <Link to='/signup' style={{ textDecoration: 'none' }}>

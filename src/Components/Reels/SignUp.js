@@ -6,6 +6,7 @@ import Instagram from './Assets/Instagram.JPG'
 import { Link, useHistory } from 'react-router-dom'
 import { useStateValue } from './stateProvider';
 import { auth } from './firebase'
+
 function SignUp() {
     const history = useHistory()
     const [email, setEmail] = useState('')
@@ -87,7 +88,12 @@ function SignUp() {
                 >
                     <CloudUploadIcon style={{ marginRight: '10px' }} />
                     Upload profile image
-                    <input type="file" accept="image/*" hidden onChange={(e) => setImage(e.target.files[0])} />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
                 </Button>
 
                 <Button variant="contained"
@@ -95,6 +101,7 @@ function SignUp() {
                     type='submit'
                     onClick={(e) => onSignUp(e)}
                     fullWidth={true}
+                    disabled={!email || !password}
                     c>singup</Button>
 
                 <p>Have an account?
