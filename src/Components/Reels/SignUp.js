@@ -15,10 +15,13 @@ function SignUp() {
     const [image, setImage] = useState('')
     const [name, setName] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+
     const [state, dispatch] = useStateValue()
 
     const onSignUp = (e) => {
         e.preventDefault()
+        setLoading(true)
         if (image === null) {
             setError('please upload image')
             setTimeout(() => {
@@ -46,6 +49,7 @@ function SignUp() {
                         })
                     })
                 handleUpload(authUser.user.uid)
+                setLoading(false)
                 history.push('/')
 
             })
@@ -160,7 +164,7 @@ function SignUp() {
                     type='submit'
                     onClick={(e) => onSignUp(e)}
                     fullWidth={true}
-                    disabled={!email || !password}
+                    disabled={(!email || !password) || loading}
                 >singup</Button>
 
                 <p>Have an account?

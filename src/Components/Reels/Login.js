@@ -17,11 +17,14 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [state, dispatch] = useStateValue()
     const history = useHistory()
 
     const signIn = () => {
+        setLoading(true)
+
         auth.signInWithEmailAndPassword(email, password)
             .then((authUser) => {
                 console.log(' logged in');
@@ -33,6 +36,7 @@ function Login() {
                         name: authUser.user.displayName,
                     }
                 })
+                setLoading(false)
                 history.push('/')
             })
             .catch((err) => {
@@ -125,7 +129,7 @@ function Login() {
                     fullWidth={true}
                     margin='dense'
                     onClick={signIn}
-                    disabled={!email || !password}
+                    disabled={(!email || !password) || loading}
                 >Login
                 </Button>
 

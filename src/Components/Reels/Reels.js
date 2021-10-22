@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Login from './Login';
 import { auth } from './firebase';
-import Welcome from './Welcome';
+import Feed from './Feed';
 
 function Reels() {
     const [state, dispatch] = useStateValue()
@@ -67,7 +67,7 @@ function Reels() {
                                     <SignUp />
                                 </Route>
                                 <Route path='/' exact>
-                                    <Welcome />
+                                    <Feed />
                                 </Route>
                             </>)
                     }

@@ -4,7 +4,7 @@ import { auth, db } from './firebase'
 import { useStateValue } from './stateProvider'
 import { Link, useHistory } from 'react-router-dom'
 
-function Welcome() {
+function Feed() {
     const [state, dispatch] = useStateValue()
     const history = useHistory()
     const [error, setError] = useState('')
@@ -59,4 +59,4 @@ function Welcome() {
     )
 }
 
-export default Welcome
+export default Feed
