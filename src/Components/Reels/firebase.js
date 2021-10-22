@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyBI5oVHQCSZx34MjjTJMajj25GXAOt-vJc",
     authDomain: "reels-project-3a271.firebaseapp.com",
@@ -10,8 +11,9 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
-export const db = firebaseApp.firestore()
-export const auth = firebase.auth()
+const db = firebaseApp.firestore()
+const auth = firebase.auth()
 // to upload files
-export const storage = firebase.storage()
+const storage = firebase.storage()
+export { db, auth, storage }
 

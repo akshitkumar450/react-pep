@@ -1,8 +1,9 @@
-export const initailState = {
+export const initialState = {
     user: null
 }
 
-export const reducer = (state = initailState, action) => {
+export const reducer = (state = initialState, action) => {
+    console.log(action);
     switch (action.type) {
         case 'SIGN_IN':
             return {
