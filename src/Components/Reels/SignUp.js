@@ -54,6 +54,7 @@ function SignUp() {
 
             })
             .catch((err) => {
+                setLoading(false)
                 setError(err.message)
                 setTimeout(() => {
                     setError('')

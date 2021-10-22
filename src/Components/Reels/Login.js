@@ -40,6 +40,7 @@ function Login() {
                 history.push('/')
             })
             .catch((err) => {
+                setLoading(false)
                 setError(err.message)
                 setTimeout(() => {
                     setError('')
