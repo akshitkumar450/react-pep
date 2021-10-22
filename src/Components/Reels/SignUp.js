@@ -169,9 +169,16 @@ function SignUp() {
                 >singup</Button>
 
                 <p>Have an account?
-                    <Link to='/' style={{ textDecoration: 'none' }}>
-                        <strong>Log in</strong>
-                    </Link>
+                    {
+                        state.user ?
+                            <Link to='/login' style={{ textDecoration: 'none' }}>
+                                <strong>Log in</strong>
+                            </Link>
+                            :
+                            <Link to='/' style={{ textDecoration: 'none' }}>
+                                <strong>Log in</strong>
+                            </Link>
+                    }
                 </p>
             </div>
 

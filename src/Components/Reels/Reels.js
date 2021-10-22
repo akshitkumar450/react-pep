@@ -47,35 +47,32 @@ function Reels() {
     return (
         <div className='reels'>
             <Router>
-                <Switch>
-                    {
-                        !state.user ?
-                            (<>
-                                <Route path='/' exact>
-                                    <Login />
-                                </Route>
-                                <Route path='/signup' exact>
-                                    <SignUp />
-                                </Route>
-                                <Route path='/*'>
-                                    <Redirect to='/' />
-                                </Route>
-                            </>)
-                            :
-                            (<>
-                                <Route path='/login' exact>
-                                    <Login />
-                                </Route>
-                                <Route path='/signup' exact>
-                                    <SignUp />
-                                </Route>
-                                <Route path='/' exact>
-                                    <Feed />
-                                </Route>
-                            </>)
-                    }
-
-                </Switch>
+                {
+                    !state.user ?
+                        (<Switch>
+                            <Route path='/' exact>
+                                <Login />
+                            </Route>
+                            <Route path='/signup' exact>
+                                <SignUp />
+                            </Route>
+                            <Route path='/*'>
+                                <Redirect to='/' />
+                            </Route>
+                        </Switch>)
+                        :
+                        (<Switch>
+                            <Route path='/login' exact>
+                                <Login />
+                            </Route>
+                            <Route path='/signup' exact>
+                                <SignUp />
+                            </Route>
+                            <Route path='/' exact>
+                                <Feed />
+                            </Route>
+                        </Switch>)
+                }
             </Router>
         </div>
 
