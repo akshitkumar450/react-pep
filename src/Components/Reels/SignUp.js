@@ -44,9 +44,10 @@ function SignUp() {
                                 name: name,
                             }
                         })
-                        history.push('/')
                     })
-                handleUpload()
+                handleUpload(authUser.user.uid)
+                history.push('/')
+
             })
             .catch((err) => {
                 setError(err.message)
@@ -58,7 +59,7 @@ function SignUp() {
     // console.log(state.user?.uid);
     // console.log(state.user);
 
-    const handleUpload = () => {
+    const handleUpload = (id) => {
         // uploading image to storage in firebase 
         // images will be available in storage section the folder images (in firebase)
         const uploadTask = storage.ref(`images/${image.name}`).put(image)
@@ -92,6 +93,7 @@ function SignUp() {
                             .add({
                                 name: name,
                                 email: email,
+                                userId: id,
                                 photo: url,
                                 created: firebase.firestore.FieldValue.serverTimestamp()
                             })

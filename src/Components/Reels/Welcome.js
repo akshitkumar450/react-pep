@@ -11,9 +11,12 @@ function Welcome() {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        db.collection('users').onSnapshot((snapshot) => (
-            setData(snapshot.docs.map((doc) => doc.data()))
-        ))
+        db
+            .collection('users')
+            .orderBy('created', 'desc')
+            .onSnapshot((snapshot) => (
+                setData(snapshot.docs.map((doc) => doc.data()))
+            ))
     }, [])
     // console.log(data);
     const signOut = () => {
