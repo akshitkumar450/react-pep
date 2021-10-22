@@ -26,7 +26,7 @@ function Reels() {
                     payload: {
                         uid: authUser.uid,
                         email: authUser.email,
-                        name: authUser.displayName
+                        name: authUser.displayName,
                     }
                 })
             } else {
@@ -43,7 +43,7 @@ function Reels() {
         }
     }, [dispatch])
 
-    console.log(state.user);
+    // console.log(state.user);
     return (
         <div className='reels'>
             <Router>

@@ -30,7 +30,7 @@ function Login() {
                     payload: {
                         uid: authUser.user.uid,
                         email: authUser.user.email,
-                        name: authUser.user.displayName
+                        name: authUser.user.displayName,
                     }
                 })
                 history.push('/')

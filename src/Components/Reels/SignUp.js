@@ -5,26 +5,34 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Instagram from './Assets/Instagram.JPG'
 import { Link, useHistory } from 'react-router-dom'
 import { useStateValue } from './stateProvider';
-import { auth } from './firebase'
+import { auth, db, storage } from './firebase'
+import firebase from 'firebase';
 
 function SignUp() {
     const history = useHistory()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [image, setImage] = useState(null)
+    const [image, setImage] = useState('')
     const [name, setName] = useState('')
     const [error, setError] = useState('')
     const [state, dispatch] = useStateValue()
 
     const onSignUp = (e) => {
         e.preventDefault()
+        if (image === null) {
+            setError('please upload image')
+            setTimeout(() => {
+                setError('')
+            }, 4000)
+            return;
+        }
 
         auth.createUserWithEmailAndPassword(email, password)
             .then((authUser) => {
                 console.log('signuped');
                 authUser.user.updateProfile({
                     // change the displayName
-                    displayName: name
+                    displayName: name,
                 })
                     .then(() => {
                         dispatch({
@@ -33,12 +41,12 @@ function SignUp() {
                             payload: {
                                 uid: authUser.user.uid,
                                 email: authUser.user.email,
-                                name: name
+                                name: name,
                             }
                         })
                         history.push('/')
                     })
-
+                handleUpload()
             })
             .catch((err) => {
                 setError(err.message)
@@ -47,7 +55,51 @@ function SignUp() {
                 }, 4000)
             })
     }
+    // console.log(state.user?.uid);
+    // console.log(state.user);
 
+    const handleUpload = () => {
+        // uploading image to storage in firebase 
+        // images will be available in storage section the folder images (in firebase)
+        const uploadTask = storage.ref(`images/${image.name}`).put(image)
+        // progress
+        uploadTask.on(
+            "state_changed", (snapshot) => {
+                // progress function
+                const progress =
+                    Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                console.log(`progress ${progress} done`);
+            },
+            (err) => {
+                // error
+                setError(err.message)
+                setTimeout(() => {
+                    setError('')
+                }, 4000)
+                return;
+            },
+            () => {
+                // complete fn
+                // getting image from images folder in the storage section in firebase
+                storage
+                    .ref('images')
+                    .child(image.name)
+                    .getDownloadURL()
+                    .then((url) => {
+                        // console.log(url);
+                        db
+                            .collection('users')
+                            .add({
+                                name: name,
+                                email: email,
+                                photo: url,
+                                created: firebase.firestore.FieldValue.serverTimestamp()
+                            })
+                    })
+            }
+        )
+
+    }
     return (
         <div className='signUp'>
             <div className="signUp__form">

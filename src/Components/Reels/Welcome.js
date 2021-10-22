@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
-import React, { useState } from 'react'
-import { auth } from './firebase'
+import React, { useEffect, useState } from 'react'
+import { auth, db } from './firebase'
 import { useStateValue } from './stateProvider'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -8,7 +8,14 @@ function Welcome() {
     const [state, dispatch] = useStateValue()
     const history = useHistory()
     const [error, setError] = useState('')
+    const [data, setData] = useState([])
 
+    useEffect(() => {
+        db.collection('users').onSnapshot((snapshot) => (
+            setData(snapshot.docs.map((doc) => doc.data()))
+        ))
+    }, [])
+    // console.log(data);
     const signOut = () => {
         auth.signOut()
             .then((user) => {
@@ -27,6 +34,7 @@ function Welcome() {
             })
 
     }
+    // console.log(data);
     return (
         <div>
             <h1>{state.user.name}</h1>
@@ -35,6 +43,15 @@ function Welcome() {
                 onClick={signOut}
 
             >logout</Button>
+            {
+                data.map(({ name, email, photo }) => {
+                    return (<div>
+                        <h1>{name}</h1>
+                        <h1>{email}</h1>
+                        <img src={photo} alt="" width="250" />
+                    </div>)
+                })
+            }
         </div>
     )
 }
