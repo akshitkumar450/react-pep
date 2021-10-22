@@ -32,7 +32,7 @@ function Login() {
                         name: authUser.user.displayName
                     }
                 })
-                history.push('/welcome')
+                history.push('/')
             })
             .catch((err) => alert(err.message))
     }

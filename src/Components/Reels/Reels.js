@@ -43,45 +43,36 @@ function Reels() {
         }
     }, [dispatch])
 
-    // console.log(state.user);
+    console.log(state.user);
     return (
         <div className='reels'>
             <Router>
-                {
-                    !state.user ?
-                        (
-                            <>
+                <Switch>
+                    {
+                        !state.user ?
+                            (<>
                                 <Route path='/' exact>
-                                    <p>New to Instagram?
-                                        <Link to='/signup' style={{ textDecoration: 'none' }}>
-                                            <strong>SingUp</strong>
-                                        </Link>
-                                    </p>
-                                    <p>Have an account?
-                                        <Link to='/login' style={{ textDecoration: 'none' }}>
-                                            <strong>Log in</strong>
-                                        </Link>
-                                    </p>
+                                    <Login />
                                 </Route>
-
                                 <Route path='/signup' exact>
                                     <SignUp />
                                 </Route>
+                            </>)
+                            :
+                            (<>
                                 <Route path='/login' exact>
                                     <Login />
                                 </Route>
-                            </>
-                        ) :
-
-                        (<Switch>
-                            <>
-                                <Route path='/welcome' exact>
+                                <Route path='/signup' exact>
+                                    <signUp />
+                                </Route>
+                                <Route path='/' exact>
                                     <Welcome />
                                 </Route>
+                            </>)
+                    }
 
-                            </>
-                        </Switch>)
-                }
+                </Switch>
             </Router>
         </div>
 

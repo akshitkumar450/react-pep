@@ -10,7 +10,7 @@ function SignUp() {
     const history = useHistory()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState(null)
     const [name, setName] = useState('')
     const [state, dispatch] = useStateValue()
 
@@ -34,7 +34,7 @@ function SignUp() {
                                 name: name
                             }
                         })
-                        history.push('/welcome')
+                        history.push('/')
                     })
 
             })
@@ -94,7 +94,7 @@ function SignUp() {
                     c>singup</Button>
 
                 <p>Have an account?
-                    <Link to='/login' style={{ textDecoration: 'none' }}>
+                    <Link to='/' style={{ textDecoration: 'none' }}>
                         <strong>Log in</strong>
                     </Link>
                 </p>

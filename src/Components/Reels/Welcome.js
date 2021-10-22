@@ -16,14 +16,14 @@ function Welcome() {
                     type: 'SIGN_OUT',
                     payload: null
                 })
-                history.push('/login')
+                history.push('/')
             })
             .catch((err) => alert(err.message))
 
     }
     return (
         <div>
-            <h1>instagram</h1>
+            <h1>{state.user.name}</h1>
             <Button variant="contained"
                 margin='dense'
                 onClick={signOut}
