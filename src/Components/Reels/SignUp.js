@@ -12,6 +12,7 @@ function SignUp() {
     const [password, setPassword] = useState('')
     const [image, setImage] = useState(null)
     const [name, setName] = useState('')
+    const [error, setError] = useState('')
     const [state, dispatch] = useStateValue()
 
     const onSignUp = (e) => {
@@ -38,14 +39,17 @@ function SignUp() {
                     })
 
             })
-            .catch((err) => alert(err.message))
+            .catch((err) => setError(err.message))
     }
 
     return (
         <div className='signUp'>
             <div className="signUp__form">
                 <img src={Instagram} alt="logo" />
-                <Alert severity="error" className='signUp__alert'>This is an error alert — check it out!</Alert>
+                {
+                    error &&
+                    <Alert severity="error" className='signUp__alert'>{error}</Alert>
+                }
                 <TextField
                     id="outlined-email-input"
                     label="email"

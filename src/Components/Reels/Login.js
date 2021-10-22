@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material'
+import { Alert, Button, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Instagram from './Assets/Instagram.JPG'
@@ -16,6 +16,8 @@ import { useStateValue } from './stateProvider'
 function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
+
     const [state, dispatch] = useStateValue()
     const history = useHistory()
 
@@ -34,7 +36,7 @@ function Login() {
                 })
                 history.push('/')
             })
-            .catch((err) => alert(err.message))
+            .catch((err) => setError(err.message))
     }
 
     return (
@@ -66,6 +68,10 @@ function Login() {
 
             <div className='login__form'>
                 <img src={Instagram} alt="logo" />
+                {
+                    error &&
+                    <Alert severity="error" className='signUp__alert'>{error}</Alert>
+                }
                 <TextField
                     id="outlined-email-input"
                     label="email"
