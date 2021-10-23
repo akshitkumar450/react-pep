@@ -25,7 +25,44 @@
   top: 93px;
   left: 143px;
 }
-
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 8px 6px -10px black;
+}
+.navbar__right {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.navbar__left {
+  cursor: pointer;
+}
+.navbar__right div {
+  margin: 0 10px;
+}
+.navbar__right .MuiSvgIcon-root,
+.navbar__right .MuiAvatar-root {
+  height: 40px !important;
+  width: 40px !important;
+  object-fit: contain;
+  cursor: pointer;
+}
+.uploadFile__alert {
+  display: grid !important;
+  place-items: center !important;
+}
+.uploadFile__uploadBtn {
+  display: grid !important;
+  place-items: center !important;
+  margin-top: 20px !important;
+}
+.upload__progress {
+  width: 30vw;
+  margin: 0 auto;
+  margin-top: 20px;
+}
 @media (max-width: 450px) {
   .signUp__form,
   .login__form {

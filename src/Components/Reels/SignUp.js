@@ -67,7 +67,7 @@ function SignUp() {
     const handleUpload = (id) => {
         // uploading image to storage in firebase 
         // images will be available in storage section the folder images (in firebase)
-        const uploadTask = storage.ref(`images/${image.name}`).put(image)
+        const uploadTask = storage.ref(`/users/${image.name}`).put(image)
         // progress
         uploadTask.on(
             "state_changed", (snapshot) => {
@@ -88,14 +88,17 @@ function SignUp() {
                 // complete fn
                 // getting image from images folder in the storage section in firebase
                 storage
-                    .ref('images')
+                    .ref('users')
                     .child(image.name)
                     .getDownloadURL()
                     .then((url) => {
                         // console.log(url);
                         db
                             .collection('users')
-                            .add({
+                            // saving the data of user in its own userid
+                            // we have given our own id for the data to put on
+                            .doc(id)
+                            .set({
                                 name: name,
                                 email: email,
                                 userId: id,

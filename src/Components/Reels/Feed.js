@@ -1,60 +1,35 @@
-import { Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { auth, db } from './firebase'
 import { useStateValue } from './stateProvider'
-import { Link, useHistory } from 'react-router-dom'
+import Navbar from './Navbar'
+import UploadFile from './UploadFile'
 
 function Feed() {
     const [state, dispatch] = useStateValue()
-    const history = useHistory()
-    const [error, setError] = useState('')
     const [data, setData] = useState([])
 
+    // getting the data of the current logged in user
     useEffect(() => {
-        db
+        const unsubscribe = db
             .collection('users')
-            .orderBy('created', 'desc')
-            .onSnapshot((snapshot) => (
-                setData(snapshot.docs.map((doc) => doc.data()))
-            ))
-    }, [])
-    // console.log(data);
-    const signOut = () => {
-        auth.signOut()
-            .then((user) => {
-                console.log('logged in');
-                dispatch({
-                    type: 'SIGN_OUT',
-                    payload: null
-                })
-                history.push('/')
+            .doc(state.user?.uid)
+            .onSnapshot((snapshot) => {
+                return setData(snapshot.data())
             })
-            .catch((err) => {
-                setError(err.message)
-                setTimeout(() => {
-                    setError('')
-                }, 4000)
-            })
+        return () => {
+            unsubscribe()
+        }
+    }, [state.user])
 
-    }
+    // console.log(state.user);
+    // getting the data for the current logged in user
     // console.log(data);
     return (
-        <div>
-            <h1>{state.user.name}</h1>
-            <Button variant="contained"
-                margin='dense'
-                onClick={signOut}
-
-            >logout</Button>
-            {
-                data.map(({ name, email, photo }) => {
-                    return (<div>
-                        <h1>{name}</h1>
-                        <h1>{email}</h1>
-                        <img src={photo} alt="" width="250" />
-                    </div>)
-                })
-            }
+        <div className='feed'>
+            <Navbar />
+            <UploadFile
+                user={data}
+            />
         </div>
     )
 }
