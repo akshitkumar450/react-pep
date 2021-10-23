@@ -64,7 +64,11 @@ function Login() {
 
     return (
         <div className="login">
-            <div className="login__carouselContainer" style={{ backgroundImage: 'url(' + insta + ')', backgroundSize: 'cover' }}>
+            <div className="login__carouselContainer"
+                style={{
+                    backgroundImage: 'url(' + insta + ')',
+                    backgroundSize: 'cover'
+                }}>
                 <div className="login__imgCarousel">
                     <CarouselProvider
                         visibleSlides={1}
