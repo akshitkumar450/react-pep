@@ -85,7 +85,19 @@
   border-radius: 20px;
   margin: 5px 0;
 }
-
+.posts__videos {
+  position: relative;
+}
+.posts__userInfo {
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  z-index: 100;
+}
+.posts__userInfo h4 {
+  color: white;
+  margin-left: 7px;
+}
 /* with this the next video full fit to the container height
     as soon as the next half video is visible it will scroll to next video
 */
@@ -93,6 +105,19 @@
   width: 100%;
   height: 60vh;
   scroll-snap-align: start;
+}
+.like__likeIcon {
+  position: absolute;
+  bottom: 4%;
+  left: 10%;
+}
+.like {
+  cursor: pointer;
+  color: red;
+}
+.unlike {
+  cursor: pointer;
+  color: white;
 }
 @media (max-width: 450px) {
   .signUp__form,

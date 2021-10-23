@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { db } from './firebase'
 import CircularProgress from '@mui/material/CircularProgress';
 import Video from './Video';
-function Posts() {
+import { Avatar } from '@mui/material';
+import Like from './Like'
+function Posts({ user }) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
@@ -44,6 +46,14 @@ function Posts() {
                                 <React.Fragment key={post.id}>
                                     <div className='posts__videos'>
                                         <Video src={post.data.postUrl} />
+                                        <div className='posts__userInfo' style={{
+                                            display: 'flex',
+                                            alignItems: 'center'
+                                        }}>
+                                            <Avatar alt="Remy Sharp" src={user.photo} />
+                                            <h4>{user.name}</h4>
+                                        </div>
+                                        <Like user={user} post={post} />
                                     </div>
                                 </React.Fragment>
                             )

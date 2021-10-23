@@ -22,7 +22,7 @@ function Video({ src }) {
 
     return (
         // muted by default
-        <video src={src} onEnded={handleScroll} className='videos' muted controls onClick={handleClick}></video>
+        <video src={src} onEnded={handleScroll} className='videos' muted onClick={handleClick}></video>
     )
 }
 
