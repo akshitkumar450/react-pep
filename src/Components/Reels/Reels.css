@@ -30,6 +30,10 @@
   justify-content: space-around;
   align-items: center;
   box-shadow: 0 8px 6px -10px black;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
 }
 .navbar__right {
   display: flex;
@@ -62,6 +66,33 @@
   width: 30vw;
   margin: 0 auto;
   margin-top: 20px;
+}
+.posts__loader,
+.posts__videoContainer {
+  display: grid;
+  place-items: center;
+}
+.posts__videoContainer {
+  height: 60vh;
+  background-color: white;
+  /* to scroll only the videos not the full page */
+  overflow: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+
+.posts__videos video {
+  border-radius: 20px;
+  margin: 5px 0;
+}
+
+/* with this the next video full fit to the container height
+    as soon as the next half video is visible it will scroll to next video
+*/
+.videos {
+  width: 100%;
+  height: 60vh;
+  scroll-snap-align: start;
 }
 @media (max-width: 450px) {
   .signUp__form,

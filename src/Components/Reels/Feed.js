@@ -3,6 +3,7 @@ import { auth, db } from './firebase'
 import { useStateValue } from './stateProvider'
 import Navbar from './Navbar'
 import UploadFile from './UploadFile'
+import Posts from './Posts'
 
 function Feed() {
     const [state, dispatch] = useStateValue()
@@ -30,6 +31,7 @@ function Feed() {
             <UploadFile
                 user={data}
             />
+            <Posts user={data} />
         </div>
     )
 }
