@@ -2,10 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { db } from './firebase'
 import CircularProgress from '@mui/material/CircularProgress';
 import Video from './Video';
-import { Avatar } from '@mui/material';
+import { Avatar, Dialog, Typography } from '@mui/material';
 import Like from './Like'
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Like2 from './Like2';
+import AddComment from './AddComment';
+
 function Posts({ user }) {
     const [posts, setPosts] = useState([])
+    // we are storing the id of the post 
+    const [open, setOpen] = useState(null)
 
     useEffect(() => {
         const unsubscribe =
@@ -54,7 +64,49 @@ function Posts({ user }) {
                                             <h4>{user?.name}</h4>
                                         </div>
                                         <Like user={user} post={post} />
+                                        <ChatBubbleIcon className='posts__commentIcon'
+                                            onClick={() => setOpen(post.id)} />
+
+                                        {/**it will open only when the open is equal to current post id */}
+                                        <Dialog
+                                            open={open === post.id}
+                                            onClose={() => setOpen(null)}
+                                            fullWidth={true}
+                                            maxWidth='md'
+                                            aria-labelledby="alert-dialog-title"
+                                            aria-describedby="alert-dialog-description"
+                                        >
+                                            <div className="modal__container">
+                                                <div className="modal__videoContainer">
+                                                    <div className='modal__video'>
+                                                        <video src={post.data.postUrl} controls autoPlay muted />
+                                                    </div>
+                                                </div>
+                                                <div className="modal__commentsContainer" >
+                                                    <Card variant='outlined' style={{ width: '450px', height: '60vh' }} >
+                                                        hello
+                                                    </Card>
+
+                                                    <Card
+                                                        variant='outlined' style={{ padding: '20px', width: '450px', height: '20vh' }}
+                                                    >
+                                                        <Typography
+                                                            style={{ textAlign: 'center' }}
+                                                        >
+                                                            {
+                                                                post.data.likes.length === 0 ? 'liked by 0 users' : `liked by ${post.data.likes.length} users`
+                                                            }
+                                                        </Typography>
+                                                        <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }} >
+                                                            <Like2 user={user} post={post} />
+                                                            <AddComment user={user} post={post} />
+                                                        </div>
+                                                    </Card>
+                                                </div>
+                                            </div>
+                                        </Dialog>
                                     </div>
+
                                 </React.Fragment>
                             )
                         })}
