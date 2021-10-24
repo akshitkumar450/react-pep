@@ -50,8 +50,8 @@ function Posts({ user }) {
                                             display: 'flex',
                                             alignItems: 'center'
                                         }}>
-                                            <Avatar alt="Remy Sharp" src={user.photo} />
-                                            <h4>{user.name}</h4>
+                                            <Avatar alt="Remy Sharp" src={user?.photo} />
+                                            <h4>{user?.name}</h4>
                                         </div>
                                         <Like user={user} post={post} />
                                     </div>

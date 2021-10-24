@@ -12,7 +12,7 @@ function Like({ user, post: { data, id } }) {
         let check = data.likes.includes(user.userId) ? true : false
         setLike(check)
     }, [data, user.userId])
-    console.log(like);
+    // console.log(like);
     const handleLike = () => {
         // if the video is already like and we want to unlike
         if (like === true) {
