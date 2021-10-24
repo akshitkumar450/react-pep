@@ -6,11 +6,9 @@ import { Avatar, Dialog, Typography } from '@mui/material';
 import Like from './Like'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Like2 from './Like2';
 import AddComment from './AddComment';
+import Comments from './Comments';
 
 function Posts({ user }) {
     const [posts, setPosts] = useState([])
@@ -51,7 +49,7 @@ function Posts({ user }) {
                     :
                     <div className="posts__videoContainer">
                         {posts?.map((post) => {
-                            console.log(post);
+                            // console.log(post);
                             return (
                                 <React.Fragment key={post.id}>
                                     <div className='posts__videos'>
@@ -84,7 +82,7 @@ function Posts({ user }) {
                                                 </div>
                                                 <div className="modal__commentsContainer" >
                                                     <Card variant='outlined' style={{ width: '450px', height: '60vh' }} >
-                                                        hello
+                                                        <Comments post={post} />
                                                     </Card>
 
                                                     <Card
