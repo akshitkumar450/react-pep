@@ -9,6 +9,8 @@ import Login from './Login';
 import { auth } from './firebase';
 import Feed from './Feed';
 import { Redirect } from 'react-router';
+import Profile from './Profile';
+import Navbar from './Navbar';
 function Reels() {
     const [state, dispatch] = useStateValue()
 
@@ -67,6 +69,9 @@ function Reels() {
                             </Route>
                             <Route path='/signup' exact>
                                 <SignUp />
+                            </Route>
+                            <Route path='/profile/:id' exact>
+                                <Profile />
                             </Route>
                             <Route path='/' exact>
                                 <Feed />

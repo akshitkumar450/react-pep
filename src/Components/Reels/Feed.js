@@ -27,7 +27,7 @@ function Feed() {
     // console.log(data);
     return (
         <div className='feed'>
-            <Navbar />
+            <Navbar user={data} />
             <UploadFile
                 user={data}
             />
