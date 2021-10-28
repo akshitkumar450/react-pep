@@ -1,4 +1,5 @@
 import './App.css';
+import CertificateList from './Components/Certificate-Generator/CertificateList';
 import Movies from './Components/Movies/Movies';
 import { initialState, reducer } from './Components/Reels/reducer';
 import Reels from './Components/Reels/Reels';
@@ -9,9 +10,12 @@ function App() {
   return (
     // <Todo />
     // <Movies />
-    <StateProvider initialState={initialState} reducer={reducer}>
-      <Reels />
-    </StateProvider>
+    // <StateProvider initialState={initialState} reducer={reducer}>
+    //   <Reels />
+    // </StateProvider>
+    <div style={{ marginLeft: '20%' }}>
+      <CertificateList />
+    </div>
   );
 }
 
