@@ -7,8 +7,9 @@ import Reels from './Components/Reels/Reels';
 import { StateProvider } from './Components/Reels/stateProvider';
 import AppCart from './Components/Shopping-Cart/AppCart';
 import store from './Components/Shopping-Cart/redux/store';
+import AppThunk from './Components/thunk/AppThunk';
 import Todo from './Components/Todo';
-
+import storeUser from './Components/thunk/store'
 function App() {
   return (
     // <Todo />
@@ -19,8 +20,11 @@ function App() {
     // <div style={{ marginLeft: '20%' }}>
     //   <CertificateList />
     // </div>
-    <Provider store={store}>
-      <AppCart />
+    // <Provider store={store}>
+    //   <AppCart />
+    // </Provider>
+    <Provider store={storeUser}>
+      <AppThunk />
     </Provider>
   );
 }
