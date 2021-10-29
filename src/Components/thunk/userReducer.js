@@ -1,7 +1,8 @@
-import { FETCH_USERS } from "./ActionsTypes"
+import { FETCH_DOG, FETCH_USERS } from "./ActionsTypes"
 
 const initialState = {
-    users: []
+    users: [],
+    dog: {}
 }
 
 export const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: [...state.users, action.payload]
+            }
+        case FETCH_DOG:
+            return {
+                ...state,
+                dog: action.payload
             }
         default:
             return state

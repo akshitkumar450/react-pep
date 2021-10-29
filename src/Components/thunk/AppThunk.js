@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchUsers } from './actions'
+import { fetchDog, fetchUsers } from './actions'
 
-function AppThunk({ users, fetchUser }) {
+function AppThunk({ users, fetchUser, dog, fetchDog }) {
     return (
         <div>
             <h1>length:{users[0]?.length}</h1>
@@ -14,19 +14,26 @@ function AppThunk({ users, fetchUser }) {
                     ))
                 }
             </ul>
+
+            <button onClick={fetchDog}>Fetch Dog</button>
+            <p>{dog.status}</p>
+            <img src={dog.message} width='200' alt="dog-img" />
+
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        users: state.user.users
+        users: state.user.users,
+        dog: state.user.dog
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchUser: () => dispatch(fetchUsers())
+        fetchUser: () => dispatch(fetchUsers()),
+        fetchDog: () => dispatch(fetchDog())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AppThunk)
