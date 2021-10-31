@@ -20,12 +20,12 @@ function App() {
     // <div style={{ marginLeft: '20%' }}>
     //   <CertificateList />
     // </div>
-    // <Provider store={store}>
-    //   <AppCart />
-    // </Provider>
-    <Provider store={storeUser}>
-      <AppThunk />
+    <Provider store={store}>
+      <AppCart />
     </Provider>
+    // <Provider store={storeUser}>
+    //   <AppThunk />
+    // </Provider>
   );
 }
 

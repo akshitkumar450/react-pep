@@ -46,7 +46,11 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
+            // item to be added in the cart
             const item = state.products.find((product) => product.id === action.payload.id)
+            // check whether are item to be added is in the cart or not
+            // if not in the cart add the field qty=1
+            // if in the cart update the qty by 1
             const inCart = state.cart.find((cartItem) => cartItem.id === action.payload.id)
             return {
                 ...state,

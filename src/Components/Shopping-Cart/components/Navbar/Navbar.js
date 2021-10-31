@@ -43,7 +43,10 @@ function Navbar2({ cart }) {
             </Link>
           </Typography>
           <Link to='/cart' style={{ color: '#2f3542' }}>
-            <Button color="inherit">Cart<ShoppingCartIcon style={{ marginLeft: '12%', marginRight: '1%' }} /><span className='cartNumber'>{cartCount}</span></Button>
+            <Button color="inherit">Cart
+              <ShoppingCartIcon style={{ marginLeft: '12%', marginRight: '1%' }} />
+              <span className='cartNumber'>{cartCount}</span>
+            </Button>
           </Link>
         </Toolbar>
       </AppBar>
