@@ -5,13 +5,11 @@ export const educationReducer = (state = initialState.education, action) => {
     switch (action.type) {
         case SET_EDUCATION:
             return {
-                ...state,
-                education: action.payload
+                ...action.payload
             }
         case UPDATE_EDUCATION:
             return {
-                ...state,
-                education: action.payload
+                ...action.payload
             }
         default:
             return state

@@ -10,7 +10,7 @@ export const setDocument = (skinCode) => {
         }
     }
 }
-export const upadteDocument = (skinCode) => {
+export const updateDocument = (skinCode) => {
     return {
         type: UPDATE_SKIN,
         payload: {

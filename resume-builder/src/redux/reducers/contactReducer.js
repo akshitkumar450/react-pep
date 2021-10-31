@@ -5,13 +5,11 @@ export const contactReducer = (state = initialState.contact, action) => {
     switch (action.type) {
         case SET_CONTACT:
             return {
-                ...state,
-                contact: action.payload
+                ...action.payload
             }
         case UPDATE_CONTACT:
             return {
-                ...state,
-                contact: action.payload
+                ...action.payload
             }
         default:
             return state

@@ -1,20 +1,23 @@
 import React from 'react';
 import { skinCodes } from '../../constants/typeCodes';
-// import * as actionTypes from '../../actions/actionTypes';
-// import { bindActionCreators } from 'redux';
-
 // import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-function GettingStarted(props) {
-    let history = useHistory();
-    const onChange = async (skinCd) => {
+import { setDocument, updateDocument } from '../../redux/actions/documentActions';
+import { connect } from 'react-redux';
 
-        // if(props.document.id){
-        //     //  props.updateDocument(props.document.id, skinCd);        
-        // }
-        // else{
-        //     //  props.setDocument(skinCd); 
-        // }
+function GettingStarted({ document, setDocument, updateDocument }) {
+    let history = useHistory();
+
+    const onChange = (skinCode) => {
+        if (document.id !== null) {
+            //means we have come to this page earlier also 
+            //then we will update the skin code
+            updateDocument(skinCode);
+        } else {
+            // we have not come to this page
+            // so set the document 
+            setDocument(skinCode);
+        }
         history.push('/contact');
     }
 
@@ -28,18 +31,18 @@ function GettingStarted(props) {
                 </p>
                 <div className="styleTemplate ">
                     {
-                        skinCodes.map((value, index) => {
+                        skinCodes.map((skinCode, index) => {
                             return (
                                 <div key={index} className="template-card rounded-border">
-                                    <i className={(value === 'demo-value' ? 'selected fa fa-check' : 'hide')}></i>
+                                    <i className={(skinCode === 'demo-value' ? 'selected fa fa-check' : 'hide')}></i>
                                     <img
                                         className=''
-                                        src={'/images/' + value + '.svg'}
+                                        src={'/images/' + skinCode + '.svg'}
                                         alt=''
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => onChange(value)}
+                                        onClick={() => onChange(skinCode)}
                                         className='btn-select-theme'>
                                         USE TEMPLATE
                                     </button>
@@ -55,7 +58,19 @@ function GettingStarted(props) {
 
 }
 
+const mapStateToProps = (state) => {
+    return {
+        document: state.document
+    }
+}
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setDocument: (skinCode) => dispatch(setDocument(skinCode)),
+        updateDocument: (skinCode) => dispatch(updateDocument(skinCode))
 
-export default GettingStarted
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GettingStarted)
 

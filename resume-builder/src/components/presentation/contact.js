@@ -1,45 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-// import update from 'immutability-helper';
-import { fieldCd, skinCodes } from '../../constants/typeCodes';
-// import * as contactActions from '../../actions/contactActions';
-// import { bindActionCreators } from 'redux';
-// import { withRouter } from "react-router-dom";
+import { fieldCd } from '../../constants/typeCodes';
 import { useHistory } from "react-router-dom";
 import ResumePreview from './resumePreview'
-// import { connect } from "react-redux";
+import { setContact, updateContact } from "../../redux/actions/contactAction";
+import { connect } from "react-redux";
 
-function Contact(props) {
+function Contact({ contact, setContact, updateContact, document }) {
     let history = useHistory();
-    const [contact, setContact] = useState(props.contactSection);
-    //    useEffect(() => {
-    //        if(!props.document || !props.document.id || !props.document.skinCd)
-    //        {
-    //            history.push('/getting-started')
-    //        }
-    //    }, [])
+
+    // default value will be null from redux store
+    const [contactFormValues, setContactFormValues] = useState(contact);
+
+    // we can visit only this page if there is the document id present
+    useEffect(() => {
+        if (document.id === null) {
+            history.push('/getting-started')
+        }
+    }, [document, history])
 
 
     const onchange = (event) => {
         var key = event.target.name;
         var val = event.target.value;
-        // this.setState({contactSection:update(this.state.contactSection,{$merge: {[key]:val}})});
-        setContact({ ...contact, [key]: val })
+        setContactFormValues({ ...contactFormValues, [key]: val })
     }
-    const onSubmit = async () => {
-        // if(props.contactSection!=null){
-        //     props.updateContact(props.document.id,contact);
-        // }
-        // else{
-        //     props.addContact(props.document.id,contact);
-        // }
 
+    const onSubmit = () => {
+        if (contact !== null) {
+            // we have come to this page earlier then update only
+            updateContact(contactFormValues);
+        } else {
+            //first time visit to page
+            setContact(contactFormValues);
+        }
         history.push('/education');
     }
 
     const getFieldData = (key) => {
-        if (contact && contact[key]) {
-            return contact[key]
+        if (contactFormValues && contactFormValues[key]) {
+            return contactFormValues[key]
         }
         return "";
     }
@@ -53,7 +53,10 @@ function Contact(props) {
                         <div className="input-group">
                             <label>First Name</label>
                             <div className="effect">
-                                <input type="text" name={fieldCd.FirstName} value={getFieldData(fieldCd.FirstName)} onChange={onchange} /><span></span>
+                                <input type="text"
+                                    name={fieldCd.FirstName}
+                                    value={getFieldData(fieldCd.FirstName)}
+                                    onChange={onchange} /><span></span>
                             </div>
                             <div className="error"></div>
                         </div>
@@ -118,14 +121,25 @@ function Contact(props) {
                 <div className="preview-card">
                     <ResumePreview
                         contactSection={contact}
-                        skinCd={props?.document?.skinCd}
+                        skinCode={document?.skinCode}
                     />
                 </div>
             </div>
         </div>
     );
 }
+const mapStateToProps = (state) => {
+    return {
+        contact: state.contact,
+        document: state.document
+    }
+}
 
-
-export default Contact
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setContact: (contactFormValues) => dispatch(setContact(contactFormValues)),
+        updateContact: (contactFormValues) => dispatch(updateContact(contactFormValues))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Contact)
 

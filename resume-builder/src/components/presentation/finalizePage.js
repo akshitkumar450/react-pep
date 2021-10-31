@@ -2,11 +2,9 @@ import React from "react";
 import ResumePreview from './resumePreview'
 import jsPDF from "jspdf";
 import html2canvas from 'html2canvas';
+import { connect } from "react-redux";
 
-function Finalize(props) {
-  let educationSection = props.educationSection
-  let contactSection = props.contactSection
-  let documentd = props.document
+function Finalize({ education, contact, document }) {
 
   const saveToDatabase = async () => {
 
@@ -32,14 +30,18 @@ function Finalize(props) {
     <div className="container full finalize-page" >
       <div className="funnel-section ">
         <div className="finalize-preview-card " id="resumePreview">
-          <ResumePreview contactSection={contactSection} educationSection={educationSection} skinCd={props?.document?.skinCd}></ResumePreview>
+          <ResumePreview
+            contactSection={contact}
+            educationSection={education}
+            skinCode={document?.skinCode}
+          />
         </div>
         <div className="finalize-settings center">
           <div className=" download-resume resume-options">
             <p className="no-margin"  >
               Download Resume As PdF
             </p>
-            <a style={{ cursor: 'pointer' }} onClick={downloadResume}  >download Resume</a>
+            <a style={{ cursor: 'pointer' }} onClick={downloadResume}>download Resume</a>
           </div>
           <div className=" download-resume resume-options">
             <p className="no-margin"  >
@@ -55,6 +57,12 @@ function Finalize(props) {
 
 }
 
+const mapStateToProps = (state) => {
+  return {
+    education: state.education,
+    document: state.document,
+    contact: state.contact
+  }
+}
 
-
-export default (Finalize)
+export default connect(mapStateToProps)(Finalize)
