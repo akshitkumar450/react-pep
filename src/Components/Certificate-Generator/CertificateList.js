@@ -8,6 +8,9 @@ import ShowCertificate from "./ShowCertificate";
 import clsx from "clsx";
 import { Autocomplete } from "@material-ui/lab";
 import './Certificate.css'
+import { useRef } from "react";
+import jsPDF from "jspdf";
+import html2canvas from 'html2canvas';
 
 const CertificateList = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -124,6 +127,23 @@ const CertificateList = () => {
   //   setName(e.target.value);
   // };
 
+  const certificateRef = useRef()
+
+  const downloadCertificate = () => {
+    const certificateDownload = certificateRef.current
+    html2canvas(certificateDownload)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        var width = pdf.internal.pageSize.getWidth();
+        var height = pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, 'JPEG', 15, 40, 200, 140);
+        // pdf.output('dataurlnewwindow');
+        pdf.save("certificate.pdf");
+      }).catch(function (error) {
+        console.log(error)
+      })
+  }
 
 
   return (
@@ -136,6 +156,17 @@ const CertificateList = () => {
         />*/}
         {getRibbon()}
       </div>
+      <Button
+        className={clsx({
+          "border-radius-0 card flex-grow": true
+        })}
+        variant="outlined"
+        color="primary"
+        onClick={downloadCertificate}
+        style={{ fontSize: '16px', textDecoration: 'bold' }}
+      >
+        download Pdf
+      </Button>
       {
         showPage
           ?
@@ -234,7 +265,7 @@ const CertificateList = () => {
                 <h4 style={{ textAlign: 'center' }} >Certificate Preview</h4>
                 <br />
                 <div className='content'>
-                  <div>
+                  <div ref={certificateRef}>
                     {
                       (name === 'center' || name === 'left' || name === 'full')
                         ?

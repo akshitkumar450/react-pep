@@ -17,12 +17,12 @@ function App() {
     // <StateProvider initialState={initialState} reducer={reducer}>
     //   <Reels />
     // </StateProvider>
-    // <div style={{ marginLeft: '20%' }}>
-    //   <CertificateList />
-    // </div>
-    <Provider store={store}>
-      <AppCart />
-    </Provider>
+    <div style={{ marginLeft: '20%' }}>
+      <CertificateList />
+    </div>
+    // <Provider store={store}>
+    //   <AppCart />
+    // </Provider>
     // <Provider store={storeUser}>
     //   <AppThunk />
     // </Provider>
