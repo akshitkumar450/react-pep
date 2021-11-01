@@ -18,6 +18,7 @@ export const authReducer = (state = initialState.auth, action) => {
             return {
                 ...state,
                 loading: false,
+                user: action.payload
             }
 
         case SIGN_IN_REQUEST:
@@ -35,6 +36,7 @@ export const authReducer = (state = initialState.auth, action) => {
             return {
                 ...state,
                 loading: false,
+                user: action.payload
             }
 
         case SIGN_OUT_FAILED:
@@ -47,7 +49,9 @@ export const authReducer = (state = initialState.auth, action) => {
             return {
                 ...state,
                 loading: false,
+                user: null
             }
+
         case REMOVE_ERROR:
             return {
                 ...state,

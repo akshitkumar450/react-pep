@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './static/scss/app.scss';
 import 'react-router-dom';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
@@ -12,8 +12,27 @@ import AboutUs from './components/presentation/aboutUs';
 import Contacts from './components/presentation/contact';
 import Education from './components/presentation/education';
 import Finalize from './components/presentation/finalizePage';
+import { auth } from './firebase';
+import { signInSuccess, signOutSuccess } from './redux/actions/authActions';
+import { useDispatch } from 'react-redux';
 
 function App() {
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const unsubscribe = auth
+      .onAuthStateChanged((authUser) => {
+        if (authUser) {
+          dispatch(signInSuccess(authUser))
+        } else {
+          dispatch(signOutSuccess())
+        }
+      })
+    return () => {
+      unsubscribe()
+    }
+  }, [dispatch])
+
   return (
     <Router>
       <Header />

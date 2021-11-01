@@ -1,19 +1,49 @@
-import React from "react";
+import React, { useRef } from "react";
 import ResumePreview from './resumePreview'
 import jsPDF from "jspdf";
 import html2canvas from 'html2canvas';
 import { connect } from "react-redux";
+import { db } from "../../firebase";
 
-function Finalize({ education, contact, document }) {
-
+function Finalize({ education, contact, document, auth }) {
+  // console.log(education, contact, document);
   const saveToDatabase = async () => {
+    let user = await db
+      .collection('users')
+      .doc(auth.user.uid)
+      .get()
+    let userData = user.data()
+    // console.log(userData);
+    let obj;
+    if (userData.resumeId) {
+      obj = {
+        ...user.resumeId,
+        [document.id]: {
+          education: education,
+          contact: contact,
+          document: document
+        }
+      }
+    } else {
+      obj = {
+        [document.id]: {
+          education: education,
+          contact: contact,
+          document: document
+        }
+      }
+    }
+    db.collection('users').doc(auth.user.uid).update({
+      resumeId: obj
+    })
 
   }
+  const resumeRef = useRef()
+
   const downloadResume = () => {
 
-    const input = document.getElementById('resumePreview');
-    // console.log(document)
-    html2canvas(input)
+    const resumeDownload = resumeRef.current
+    html2canvas(resumeDownload)
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF("p", "mm", "a4");
@@ -29,7 +59,7 @@ function Finalize({ education, contact, document }) {
   return (
     <div className="container full finalize-page" >
       <div className="funnel-section ">
-        <div className="finalize-preview-card " id="resumePreview">
+        <div className="finalize-preview-card " ref={resumeRef} >
           <ResumePreview
             contactSection={contact}
             educationSection={education}
@@ -61,7 +91,8 @@ const mapStateToProps = (state) => {
   return {
     education: state.education,
     document: state.document,
-    contact: state.contact
+    contact: state.contact,
+    auth: state.auth
   }
 }
 

@@ -1,30 +1,27 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { Fragment } from "react";
+import { connect, useDispatch } from "react-redux";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import { auth } from "../../firebase";
+import { signOutSuccess, signOutFail } from "../../redux/actions/authActions";
 import logo from "../../static/images/logo.png";
 
-function LoggesOut(props) {
-  return (
-    <ul>
-      <li className="signup ">
-        <NavLink className=" btnv-1" to="/register">
-          Register
-        </NavLink>
-      </li>
-      <li className="signin">
-        <NavLink className="text-blue btnv-3" to="/login">
-          Sign In
-        </NavLink>
-      </li>
-    </ul>
-  )
-}
-
 const Header = (props) => {
-  // const auth = props.auth;
+  const dispatch = useDispatch()
+  const history = useHistory()
   const handleLogOut = () => {
-    console.log('The user will sign out');
+    auth
+      .signOut()
+      .then(() => {
+        dispatch(signOutSuccess())
+        history.push('/login')
+      })
+      .catch((err) => {
+        dispatch(signOutFail(err))
+      })
+
   }
 
+  // console.log(props.auth.user.email);
   return (
     <header className="header">
       <nav className="nav">
@@ -32,24 +29,42 @@ const Header = (props) => {
           <img className='logo' src={logo}></img>
         </a>
         <div className="header-links full-height">
-
-          {/* { isLoaded(auth) && !isEmpty(auth) ?<> */}
-
           <ul>
-            <li className="signin ">
-              <NavLink className="  " to="/">
-                Logged in as
-              </NavLink>
-            </li>
-            <li className="signin">
-              <button className="text-blue btnv-3" onClick={handleLogOut}>
-                Signout
-              </button>
-            </li>
+            {
+              props.auth?.user?.uid
+                ?
+                <Fragment>
+                  <li className="signin ">
+                    <NavLink className="  " to="/">
+                      Logged in as {props.auth.user.email}
+                    </NavLink>
+                  </li>
+                  <li className="signin">
+                    <button className="text-blue btnv-3"
+                      onClick={handleLogOut}>
+                      Signout
+                    </button>
+                  </li>
+                </Fragment>
+                :
+                <Fragment>
+                  <Link to='/login'>
+                    <li className="signin">
+                      <button className="text-blue btnv-3" >
+                        Login
+                      </button>
+                    </li>
+                  </Link>
+                  <Link to='/register'>
+                    <li className="signin">
+                      <button className="text-blue btnv-3" >
+                        signup
+                      </button>
+                    </li>
+                  </Link>
+                </Fragment>
+            }
           </ul>
-
-          {/* </>:<LoggesOut></LoggesOut>} */}
-
           <ul id="nav-mid">
             <li>
               <NavLink className="btn-nvt-gm" to="/resume-templates">
@@ -64,19 +79,15 @@ const Header = (props) => {
           </ul>
         </div>
       </nav>
-    </header>
+    </header >
 
   );
 };
 
-// const mapStateToProps=(state)=>{
-//   return{
-//      auth: state.firebase.auth
-//   }
-// }
-// const mapDispatchToProps= (dispatch)=>{
-//   return {
-//    signOut:()=>dispatch(authActions.signout())
-//   }
-// }
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Header);

@@ -8,5 +8,6 @@ export const initialState = {
     auth: {
         error: '',
         loading: false,
+        user: null
     }
 }
