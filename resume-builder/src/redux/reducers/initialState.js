@@ -5,5 +5,8 @@ export const initialState = {
     },
     contact: null,
     education: null,
-
+    auth: {
+        error: '',
+        loading: false,
+    }
 }
