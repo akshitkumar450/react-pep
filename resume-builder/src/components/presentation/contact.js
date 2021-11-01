@@ -120,7 +120,7 @@ function Contact({ contact, setContact, updateContact, document }) {
 
                 <div className="preview-card">
                     <ResumePreview
-                        contactSection={contact}
+                        contactSection={contactFormValues}
                         skinCode={document?.skinCode}
                     />
                 </div>

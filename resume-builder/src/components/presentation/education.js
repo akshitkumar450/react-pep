@@ -97,7 +97,7 @@ function Education({ education, setEducation, updateEducation, contact, document
         <div className="preview-card">
           <ResumePreview
             contactSection={contact}
-            educationSection={education}
+            educationSection={educationFormValues}
             skinCode={document?.skinCode}
           />
         </div>
